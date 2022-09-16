@@ -1,0 +1,6 @@
+{
+  "header": {
+    "title": "So cool CRM application",
+    "welcomText": "Hello {{name}}"
+  }
+}

@@ -2,23 +2,23 @@ import { StateOrder } from '../enums/state-order';
 import { OrderI } from '../interfaces/order-i';
 
 export class Order implements OrderI {
-  id!: number;
-  type!: string;
-  client!: string;
-  taux_tva = 20;
-  comment!: string;
-  nb_days = 1;
-  tjm_ht = 1200;
+  tjmHt = 1200;
+  nbJours = 1;
+  tva = 20;
   state = StateOrder.OPTION;
+  typePresta!: string;
+  client!: string;
+  comment!: string;
+  id!: number;
   constructor(obj?: Partial<Order>) {
     if (obj) {
       Object.assign(this, obj);
     }
   }
-  totalHT(): number {
-    return this.tjm_ht * this.nb_days;
+  public totalHT(): number {
+    return this.tjmHt * this.nbJours;
   }
-  totalTTC(): number {
-    return this.tjm_ht * this.nb_days * (1 + this.taux_tva / 100);
+  public totalTTC(): number {
+    return this.tjmHt * this.nbJours * (1 + this.tva / 100);
   }
 }

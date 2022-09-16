@@ -21,17 +21,17 @@ export class FormOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      id: [this.init.id],
-      type: [this.init.type, Validators.required],
+      tjmHt: [this.init.tjmHt],
+      nbJours: [this.init.nbJours],
+      tva: [this.init.tva],
+      state: [this.init.state],
+      typePresta: [this.init.typePresta, Validators.required],
       client: [
         this.init.client,
         [Validators.required, Validators.minLength(2)],
       ],
-      taux_tva: [this.init.taux_tva],
       comment: [this.init.comment],
-      nb_days: [this.init.nb_days],
-      tjm_ht: [this.init.tjm_ht],
-      state: [this.init.state],
+      id: [this.init.id],
     });
   }
 

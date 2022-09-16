@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { IconsModule } from '../icons/icons.module';
 import { TemplateModule } from '../template/template.module';
 import { BtnRedirectComponent } from './components/btn-redirect/btn-redirect.component';
@@ -18,8 +19,9 @@ import { Total2Pipe } from './pipes/total2.pipe';
     Total2Pipe,
     StateDirective,
   ],
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslateModule],
   exports: [
+    TranslateModule,
     TabListComponent,
     BtnRedirectComponent,
     TemplateModule,

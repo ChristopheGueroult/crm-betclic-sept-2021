@@ -7,10 +7,10 @@
         <app-icon-edit (click)="goToEdit(item.id)"></app-icon-edit>
         <app-icon-delete (click)="deleteItem(item.id)"></app-icon-delete>
       </td>
-      <td>{{ item.type }}</td>
+      <td>{{ item.typePresta }}</td>
       <td>{{ item.client | uppercase }}</td>
-      <td>{{ item.nb_days }}</td>
-      <td>{{ item.tjm_ht | currency: 'EUR' }}</td>
+      <td>{{ item.nbJours }}</td>
+      <td>{{ item.tjmHt | currency }}</td>
       <td>{{ item | total | currency }}</td>
       <td>{{ item | total: true | currency }}</td>
       <td [appState]="item.state">

@@ -1,14 +1,14 @@
 import { StateOrder } from '../enums/state-order';
 
 export interface OrderI {
-  id: number;
-  type: string;
-  client: string;
-  taux_tva: number;
-  comment: string;
-  nb_days: number;
-  tjm_ht: number;
+  tjmHt: number;
+  nbJours: number;
+  tva: number;
   state: StateOrder;
+  typePresta: string;
+  client: string;
+  comment: string;
+  id: number;
   totalHT(): number;
   totalTTC(): number;
 }

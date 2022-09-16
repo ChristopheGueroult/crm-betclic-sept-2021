@@ -5,5 +5,10 @@
   <li class="nav-item">
     <a class="nav-link" routerLink="/list-clients" routerLinkActive="active">Clients</a>
   </li>
+  <li class="nav-item">
+    <select (change)="changeLang($event)">
+      <option *ngFor="let lang of langs" [value]="lang">{{ lang }}</option>
+    </select>
+  </li>
 </ul>
 {{check()}}

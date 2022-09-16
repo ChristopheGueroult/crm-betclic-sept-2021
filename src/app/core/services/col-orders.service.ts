@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ColErrorHandler } from '../abstracts/col-error-handler';
 import { StateOrder } from '../enums/state-order';
@@ -11,38 +11,54 @@ import { Order } from '../models/order';
   providedIn: 'root',
 })
 export class ColOrdersService extends ColErrorHandler {
-  private data$ = new BehaviorSubject<Order[]>([]);
+  private collection$!: Observable<Order[]>;
   private urlApi = environment.urlApi;
   constructor(private http: HttpClient) {
     super();
-    this.refreshCollection();
+    // this.refreshCollection();
+    this.collection = this.http.get<Order[]>(`${this.urlApi}/orders`).pipe(
+      map((tab) => {
+        return tab.map((obj) => {
+          return new Order(obj);
+        });
+      })
+    );
   }
 
-  private refreshCollection(): void {
-    this.http
-      .get<Order[]>(`${this.urlApi}/orders`)
-      .pipe(
-        map((tab) => {
-          return tab.map((obj) => {
-            return new Order(obj);
-          });
-        }),
-        catchError(this.handleError)
-      )
-      .subscribe((datas) => {
-        this.data$.next(datas);
-      });
-  }
+  // private refreshCollection(): void {
+  //   this.http
+  //     .get<Order[]>(`${this.urlApi}/orders`)
+  //     .pipe(
+  //       map((tab) => {
+  //         return tab.map((obj) => {
+  //           return new Order(obj);
+  //         });
+  //       }),
+  //       catchError(this.handleError)
+  //     )
+  //     .subscribe((datas) => {
+  //       this.data$.next(datas);
+  //     });
+  // }
   /**
    * getter for my collection
    */
-  get collection(): Subject<Order[]> {
-    return this.data$;
+  get collection(): Observable<Order[]> {
+    return this.collection$;
   }
 
-  // public set collection
-  // set collection(col: Observable<Order[]>) {
-  //   this.data$ = col;
+  set collection(col: Observable<Order[]>) {
+    this.collection$ = col;
+  }
+
+  // public getCollection(): Observable<Order[]> {
+  //   return this.http.get<Order[]>(`${this.urlApi}/orders`).pipe(
+  //     map((tab) => {
+  //       return tab.map((obj) => {
+  //         return new Order(obj);
+  //       });
+  //     })
+  //   );
   // }
 
   // public update state item
@@ -55,7 +71,7 @@ export class ColOrdersService extends ColErrorHandler {
   // public update item in collection
   public update(item: Order): Observable<Order> {
     return this.http.put<Order>(`${this.urlApi}/orders/${item.id}`, item).pipe(
-      tap((tab) => this.refreshCollection()),
+      // tap((tab) => this.refreshCollection()),
       catchError(this.handleError)
     );
   }
@@ -63,7 +79,7 @@ export class ColOrdersService extends ColErrorHandler {
   // public add item in collection
   public add(item: Order): Observable<Order> {
     return this.http.post<Order>(`${this.urlApi}/orders`, item).pipe(
-      tap((tab) => this.refreshCollection()),
+      // tap((tab) => this.refreshCollection()),
       catchError(this.handleError)
     );
   }
@@ -71,7 +87,7 @@ export class ColOrdersService extends ColErrorHandler {
   // public delete item in collection
   public delete(id: number): Observable<Order> {
     return this.http.delete<Order>(`${this.urlApi}/orders/${id}`).pipe(
-      tap((tab) => this.refreshCollection()),
+      // tap((tab) => this.refreshCollection()),
       catchError(this.handleError)
     );
   }
